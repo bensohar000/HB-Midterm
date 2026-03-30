@@ -1,32 +1,29 @@
 <?php
 
 class Database {
-    private $host;
-    private $db_name;
-    private $username;
-    private $password;
     private $conn;
-
-    public function __construct() {
-        $this->host     = getenv('DB_HOST');
-        $this->db_name  = getenv('DB_NAME');
-        $this->username = getenv('DB_USER');
-        $this->password = getenv('DB_PASS');
-    }
 
     public function connect() {
         $this->conn = null;
 
         try {
+            $dsn = 'pgsql:host=' . getenv('dpg-d75di6450q8c73av2l1g-a.oregon-postgres.render.com') .
+                   ';port=' . getenv('5432') .
+                   ';dbname=' . getenv('quotesdb_ed9i');
+
             $this->conn = new PDO(
-                'mysql:host=' . $this->host . ';dbname=' . $this->db_name,
-                $this->username,
-                $this->password
+                $dsn,
+                getenv('root'),
+                getenv('R6aZOrjHM1TO0VoyZPkuynl5DEWsNh9B')
             );
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             echo json_encode(['message' => 'Connection Error: ' . $e->getMessage()]);
         }
+
+        return $this->conn;
+    }
+}
 
         return $this->conn;
     }
