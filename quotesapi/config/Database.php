@@ -1,4 +1,3 @@
-
 <?php
 
 class Database {
@@ -8,14 +7,14 @@ class Database {
         $this->conn = null;
 
         try {
-            $dsn = 'pgsql:host=' . getenv('dpg-d75di6450q8c73av2l1g-a.oregon-postgres.render.com') .
-                   ';port=' . getenv('5432') .
-                   ';dbname=' . getenv('quotesdb_ed9i');
+            $dsn = 'pgsql:host=' . getenv('DB_HOST') .
+                   ';port=' . getenv('DB_PORT') .
+                   ';dbname=' . getenv('DB_NAME');
 
             $this->conn = new PDO(
                 $dsn,
-                getenv('root'),
-                getenv('R6aZOrjHM1TO0VoyZPkuynl5DEWsNh9B')
+                getenv('DB_USER'),
+                getenv('DB_PASS')
             );
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
